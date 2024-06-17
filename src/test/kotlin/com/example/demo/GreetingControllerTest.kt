@@ -1,0 +1,35 @@
+package com.example.demo
+
+import io.kotest.matchers.string.shouldContain
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.context.annotation.Import
+import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt
+import org.springframework.test.web.reactive.server.WebTestClient
+
+@WebFluxTest
+@Import(SecurityConfig::class)
+class GreetingControllerTest {
+
+    @Autowired
+    lateinit var client: WebTestClient
+
+    @Test
+    fun `greeting without token`() {
+        this.client
+            .get()
+            .uri("/greeting/Hantsy")
+            .exchange()
+            .expectStatus().isUnauthorized
+    }
+
+    @Test
+    fun `greeting with token`() {
+        this.client.mutateWith(mockJwt().jwt { it.subject("test-subject") })
+            .get()
+            .uri("/greeting/Hantsy")
+            .exchange()
+            .expectBody(String::class.java).value { it shouldContain "Say Hello to Hantsy at" }
+    }
+}
