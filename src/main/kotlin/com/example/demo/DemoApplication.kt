@@ -1,6 +1,5 @@
 package com.example.demo
 
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
@@ -8,9 +7,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod.GET
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.config.web.server.invoke
-import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm
-import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder
-import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder
 import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers
 import org.springframework.web.bind.annotation.GetMapping
@@ -55,9 +51,9 @@ class SecurityConfig {
             }
         }
 
-    @Bean
-    fun jwtDecoder(@Value("\${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") jwkSetUri: String): ReactiveJwtDecoder {
-        return NimbusReactiveJwtDecoder.withJwkSetUri(jwkSetUri).build()
-    }
+//    @Bean
+//    fun jwtDecoder(@Value("\${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") jwkSetUri: String): ReactiveJwtDecoder {
+//        return NimbusReactiveJwtDecoder.withJwkSetUri(jwkSetUri).build()
+//    }
 
 }

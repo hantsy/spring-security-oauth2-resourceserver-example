@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8080"
+      - "8443:8443"
     environment:
       - KC_DB=postgres
       - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloakdb
@@ -13,7 +14,7 @@ services:
       - KC_DB_PASSWORD=keycloak
       - KC_HOSTNAME=localhost
 
-      # set admin to localhost access
+      # set admin user to localhost admin UI access
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin@123
     depends_on:
