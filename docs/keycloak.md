@@ -178,7 +178,9 @@ class SecurityConfig {
 }
 ```
 
-Restart the application, and repeat the previous steps to generate an access token and hint the `/greeting` endpoint. You will get an forbidden error.
+Restart the application, and repeat the previous steps to generate a new access token and hint the `/greeting` endpoint. 
+
+As you see, you will get an forbidden error.
 
 ```bash
 curl http://localhost:8080/greeting/Keycloak -v -H "Authorization: Bearer <access_token>"
@@ -232,7 +234,7 @@ Then restart the application.
 And try to access the `/greeting` endpoint. It is accessible as expected now.
 
 ```bash 
-curl http://localhost:8080/greeting/Keycloak -v -H "Authorization: Bearer access_token"
+curl http://localhost:8080/greeting/Keycloak -v -H "Authorization: Bearer <access_token>"
 ...
 < HTTP/1.1 200 OK
 < Content-Type: text/plain;charset=UTF-8
