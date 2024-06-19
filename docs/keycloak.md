@@ -56,13 +56,13 @@ docker compose --file ./keycloak/docker-compose.yml up --build
 
 The `--build` here is used to build Docker image from Dockerfile at the first time.
 
-Open a browser, navigate to http://localhost:8000 or https://localhost:8443. In the login page, input user/password pair that set in the *docker-compose.yaml*, then enter the Keycloak administration console.
+Open a browser, navigate to http://localhost:8000 or https://localhost:8443. In the login page, input Keycloak ADMIN user/password pair that already set in the *docker-compose.yaml*, then enter the Keycloak administration console.
 
 1. Create a new Realm *demo*. 
 2. Switch to *demo* Realm, create a new client *demo-client*, enable *Client Authentication*, *Authorization* in the *Capability config* page.
 3. Create a new user *demouser*, enable *Email Verified*. Set password for the new created user.
 
-Currently if you open http://localhost:8000/realms/demo/.well-known/openid-configuration using a browser or `curl`, you will preview all available OIDC configurations for this realm.
+Currently if you open http://localhost:8000/realms/demo/.well-known/openid-configuration in a browser or use `curl` command line, you can preview all available OIDC configurations for this realm.
 
 > For production deployment, you can choose Kubernetes ready [Keycloak Operator](https://www.keycloak.org/operator/installation).  
 
@@ -206,7 +206,7 @@ Regnerate the access token again, copy the token value. Open a brower and naviga
   }
 ```
 
-In our resource example project, let's exatract the `roles` value from JWT token and convert to Spring Secuirty aware `Authority`.
+In our resource example project, let's exatract the `roles` value from JWT claims and convert to Spring Secuirty aware `Authority`.
 
 Declare a `ReactiveJwtAuthenticationConverter` bean in the `SecurityConfig` class.
 
