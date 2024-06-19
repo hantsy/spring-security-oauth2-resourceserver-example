@@ -245,5 +245,64 @@ Say Hello to Keycloak at 2024-06-19T11:29:04.396209500
 
 ## Audience Support
 
+Audience is use for identifying the recipients that the JWT is intended for. Including an audience attribute in the token is to indiciate the client has ablitity to access the target resources/services. In the resource server it should verify the audience value after the token is decoded and make sure the client that made request is allowed to access current service.
+
+Follow Keycloak Administration [hardcoded audience](https://www.keycloak.org/docs/latest/server_admin/index.html#audience-support) guide, we can configure fine-grained audience for the clients.
+
+Enter the Keycloak ADMIN console.
+* Create a new *Client Scope* - "demo-service" that stands for the audience. 
+* In the new *demo-service* profile, click *Mappers* tab, create an *Audience* mapper *by configuration*, fill the *Included Custome Audience* with a custom name - "http://demo-service".
+* Open client *demo-client* profile, click *Client Scopes* tab, add newly created *demo-service* to the list.
+
+Back the *demo-client* profile, click *Download Adapter config* from *Action* dropdown menu at the top-right position. In the generated JSON string, it should include a `"verify-token-audience": true` item.
+
+Now regenerate access token using the following command instead.
+
+```bash 
+curl http://localhost:8000/realms/demo/protocol/openid-connect/token  \
+-u "demo-client:OQttJYpKRAvcSMOdYkZYv3Y6mZ8EBLMA" \
+-d "grant_type=password" \
+-d "username=demouser" \
+-d "password=password" \
+-d "scope=profile%20email%20demo-service"
+```
+Here we add *demo-service* in the `scope` parameter and request the access token. Then decode the access token in https://jwt.io, you will see the `aud` attribute is appeared in the decoded JSON string displayed in the right area, and the `aud` value is the custom value we have set in the audience mapper. 
+
+![jwtio2](./jwtio-aud.png)
+
+Unlike Quarkus, etc. frameworks which will verify the `aud` attribute in JWT token when accessing the resources. Spring Security does not validate the audience by default. Next, let's add audience valdiation in the resource example project.
+
+Firstly create a custom `OAuth2TokenValidator` to validate audience.
+
+```kotlin 
+class AudienceValidator(val audience: String) : OAuth2TokenValidator<Jwt> {
+    override fun validate(jwt: Jwt): OAuth2TokenValidatorResult {
+        val error = OAuth2Error("invalid_token", "The required audience is missing", null)
+        return if (jwt.audience.contains(audience)) {
+            OAuth2TokenValidatorResult.success()
+        } else {
+            OAuth2TokenValidatorResult.failure(error)
+        }
+    }
+}
+```
+
+Then declare `ReactiveJwtDecoder` bean and apply the custom validator.
+
+```kotlin
+@Bean
+fun jwtDecoder(properties: OAuth2ResourceServerProperties): ReactiveJwtDecoder {
+    val issuerUri = properties.jwt.issuerUri
+    val jwtDecoder = ReactiveJwtDecoders.fromOidcIssuerLocation(issuerUri)
+            as NimbusReactiveJwtDecoder
+
+    val audienceValidator: OAuth2TokenValidator<Jwt> = AudienceValidator(AUDIENCE)
+    val withIssuer: OAuth2TokenValidator<Jwt> = JwtValidators.createDefaultWithIssuer(issuerUri)
+    val withAudience: OAuth2TokenValidator<Jwt> = DelegatingOAuth2TokenValidator(withIssuer, audienceValidator)
+
+    jwtDecoder.setJwtValidator(withAudience)
+    return jwtDecoder
+}
+```
 
 ## Custom User Attributes in Token
