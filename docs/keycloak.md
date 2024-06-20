@@ -1,6 +1,10 @@
 # Securing Your APIs with Spring Security and Keycloak
 
-The Restful APIs works as OAuth2 *ResourceServer* role.
+Nowdays when developing a could native application, it is better to embrase OAuth2/Open ID Connect to secure your applications. 
+
+* The backend APIs/services work as OAuth2 *ResourceServer* role.
+* The Web app or Mobile apps that call the backend APIs work as OAuth2 *Client* roles.
+* The *Authentication Server* role is responsisble for authentication and authorization, you can develop one from scratch using Spring Authencation Server,or use a mature self-host solution, eg. Keycloak, or using cloud identity providers, eg Auth0, Okta, etc. 
 
 Firstly prepare a Keycloak server in the development stage. 
 
