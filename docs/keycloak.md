@@ -142,6 +142,8 @@ curl http://localhost:8080/greeting/Keycloak -v
 < content-length: 0
 ```
 
+As you see, the `/greeting` is protected and requires the access user is authenticated.
+
 Let's generate an *Access Token* that represents the user *demouser*. And it is the magic key to pass through the protected resources(eg. `/greeting` endpoint) in this *Resource Server* example application.
 
 ```bash 
@@ -154,6 +156,8 @@ curl http://localhost:8000/realms/demo/protocol/openid-connect/token  \
 {"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI3akRYcUVZQUwtRDRWS2puUDFzdlFoUFdHME1iWFY1TlFNYWZJclliWDNZIn0.eyJleHAiOjE3MTg3MDQ0MjMsImlhdCI6MTcxODcwNDEyMywianRpIjoiZmJkMTI0OWQtYTlmYS00NDgxLTgxZjgtZDUyMzRmYTg1NzAzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL3JlYWxtcy9kZW1vIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImIzNjdhMWU3LWExNzEtNDdmNi05ZDc5LWZkZGE3ZTYwODY4YiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRlbW8tY2xpZW50Iiwic2lkIjoiMGE4Y2Y4MjAtYjBlMy00ODRjLWEzMWEtOWQ5ZThkMjgzZjU5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjMwMDAiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiREVNT19VU0VSIiwiZGVmYXVsdC1yb2xlcy1kZW1vIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6ImRlbW8gdXNlciIsInByZWZlcnJlZF91c2VybmFtZSI6ImRlbW91c2VyIiwiZ2l2ZW5fbmFtZSI6ImRlbW8iLCJmYW1pbHlfbmFtZSI6InVzZXIiLCJlbWFpbCI6ImRlbW91c2VyQGV4YW1wbGUuY29tIn0.eivfns04IX9L1o5MtjeOPyKZVhSkKbEPfSYNwMwnw5JQ_y4w_pKTxeqfzS737A1mFGv8sq5kRIkOGJdS8_ONxzvfPV2dGEJbYcuBnp6OWhz5tq6o1cxZ18GleBUzjZG7JPbXJb0i4g79NByjpXn-JdOY3FCApUxwPViO7A1pfVrsexJw_lIL_QAdJZaVHMYQTBcVafjIAxH4AnpeTNyG09LLhIHx6O8AkqSrq1soHseYyQoXvGum1mloHHYKxIr41tGeoqAx6VSp-aOsk52hWoztN_mXUGgPpB-a9fWP-hLb_eWtr1NTbN-XWFxJigkgTp7g6bavYakJyqN0PYFoPA","expires_in":300,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5OGFiMGRiMi04ZmM2LTRkOTUtYTBiYS04MmUxZGJhOWI0YWIifQ.eyJleHAiOjE3MTg3MDU5MjMsImlhdCI6MTcxODcwNDEyMywianRpIjoiYzUxMDUwNGEtNjVjMS00M2YyLWFjMWEtMmEwYWIwODYwNDc4IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL3JlYWxtcy9kZW1vIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL3JlYWxtcy9kZW1vIiwic3ViIjoiYjM2N2ExZTctYTE3MS00N2Y2LTlkNzktZmRkYTdlNjA4NjhiIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6ImRlbW8tY2xpZW50Iiwic2lkIjoiMGE4Y2Y4MjAtYjBlMy00ODRjLWEzMWEtOWQ5ZThkMjgzZjU5Iiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcm9sZXMgcHJvZmlsZSBiYXNpYyJ9.nv6oxgYjrMKbCziXWWpyyPgTu23WzoIDeOBLjUiHvbKFE10Kk7x8MFVFNAls8ovY-kVXW8YIq6FhB5qUXSepow","token_type":"Bearer","not-before-policy":0,"session_state":"0a8cf820-b0e3-484c-a31a-9d9e8d283f59","scope":"email profile"}
 ```
 
+> By default if we do not provide a `scope` parameter, it will use the default scope `email profile`. If you want to generate `id_token` in the response, add a `openid` to the `scope` parameter.
+
 Extract the `access_token` value from the above JSON response body, then append a HTTP header `Authorization: Bearer token` to the original `curl` command, and hint the `/greeting` endpoint again.
 
 ```bash 
@@ -161,6 +165,7 @@ curl http://localhost:8080/greeting/Keycloak -H "Authorization: Bearer eyJhbGciO
 
 Say Hello to Keycloak at 2024-06-18T17:52:50.122802900
 ```
+As you see, you are granted to access the `/greeting` endpoint.
 
 ## Role Support
 
@@ -306,3 +311,31 @@ fun jwtDecoder(properties: OAuth2ResourceServerProperties): ReactiveJwtDecoder {
 ```
 
 ## Custom User Attributes in Token
+
+Enter the Keycloak Adminstration UI, make sure *demo* realm is selected.
+1. In *Realm Settings* page, find *User profile* tab, add a new attribute `dob`(Date of Birth), apply validator *iso-date*.
+2. Open *demouser* profile in *Users* page, fill the *Date of birth* with a valid date value, eg. `1990-12-31`.
+3. Open *demo-client* profile in *Clients* page, switch to *Dedicated Scopes*, add a new Mapper *by configuration*, select *User Attribute* in the list and add `dob` user attribute.
+
+Regenerate the access token and decode it in http://jwt.io. You will see there is a `dob` attribute in the token.
+
+![jwtio dob](./jwtio-dob.png)
+
+Try to access the userinfo endpoint for the current realm. 
+
+```bash 
+curl "http://localhost:8000/realms/demo/protocol/openid-connect/userinfo" -v  -H "Authorization: Bearer <access_token>"
+
+> GET /realms/demo/protocol/openid-connect/userinfo HTTP/1.1
+> Host: localhost:8000
+...
+< HTTP/1.1 200 OK
+< content-length: 210
+...
+{"sub":"b367a1e7-a171-47f6-9d79-fdda7e60868b","email_verified":true,"dob":"1990-12-31","name":"demo user","preferred_username":"demouser","given_name":"demo","family_name":"user","email":"demouser@example.com"}
+```
+As you see the custom field `dob` is also added in the userinfo. 
+
+> When you request access_token, you have to add `openid` to `scope`, else when you access the userinfo endpoint, you will encounter an error like `Missing openid scope`.
+
+
