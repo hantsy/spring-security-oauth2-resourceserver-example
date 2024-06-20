@@ -75,7 +75,7 @@ Open https://start.spring.io in your browser, select the following items in the 
 * Project Metadata/Java: 21
 * Dependencies: Spring Reactive Web, OAuth2 Resource Server
 
-In a Spring/Kotlin project, I would like use [Mockk](https://mockk.io) to replace the *Mockito* for mocking dependencies, and use [Kotest assertions](https://kotest.io) fluent APIs for asserting result in Kotlin DSL. Check the updated Gradle build script [here](https://github.com/hantsy/spring-security-oauth2-resourceserver-example/blob/master/build.gradle.kts).
+In Spring/Kotlin projects, I would like use [Mockk](https://mockk.io) to replace the *Mockito* for mocking dependencies, and use [Kotest assertions](https://kotest.io) fluent APIs for asserting result in Kotlin DSL. Check the updated Gradle build script [here](https://github.com/hantsy/spring-security-oauth2-resourceserver-example/blob/master/build.gradle.kts).
 
 Create a `@RestController` class to produce a simple Restful API for testing purpose.
 

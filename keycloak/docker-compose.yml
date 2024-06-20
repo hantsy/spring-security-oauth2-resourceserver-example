@@ -1,6 +1,7 @@
 services:
 
   keycloak:
+    image: hantsy/keycloak
     build:
       context: ./
       dockerfile: Dockerfile
