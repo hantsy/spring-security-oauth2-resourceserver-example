@@ -1,8 +1,8 @@
 # Securing Your APIs with Spring Security and Keycloak
 
-Nowdays when developing a could native application, it is better to embrase OAuth2/Open ID Connect to secure your applications. 
+Nowdays when developing a could native application or so-called Saas applications, we would like slipt the application into several components/parts, eg. a  administration UI for adminstrators, a web application or mobile apps for end users, and one or several backend services for handling the certain business in the background, the web application or mobile apps interact with the backend services by lightweight protocols, such as HTTP, WebSocket etc. To secure these components in your application, embracing a mature OAuth2/OpenID Connect product is a smart choose.
 
-* The backend APIs/services work as OAuth2 *ResourceServer* role.
+* The backend services work as OAuth2 *ResourceServer* role.
 * The Web app or Mobile apps that call the backend APIs work as OAuth2 *Client* roles.
 * The *Authentication Server* role is responsisble for authentication and authorization, you can develop one from scratch using Spring Authencation Server,or use a mature self-host solution, eg. Keycloak, or using cloud identity providers, eg Auth0, Okta, etc. 
 
