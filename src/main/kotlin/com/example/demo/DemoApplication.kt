@@ -97,11 +97,16 @@ class SecurityConfig {
     }
 
     private fun customRolesConverter(): Converter<Jwt, Flux<GrantedAuthority>> = Converter { jwt ->
-        (jwt.claims["realm_access"] as Map<String, Any>?)
+        // extract roles from realm_access/roles in Keycloak
+        val kcRoles =(jwt.claims["realm_access"] as Map<String, Any>?)
             ?.let { it["roles"] as Collection<String>? }
-            ?.let { roles ->
-                Flux.fromIterable(roles).map { SimpleGrantedAuthority("ROLE_$it") }
-            }
+
+        // In the simple authserver roles is exposed in root directly
+        val otherRoles = jwt.claims["roles"] as Collection<String>?
+
+        ((kcRoles ?: (emptyList<String>() + otherRoles))).let { roles ->
+            Flux.fromIterable(roles).map { SimpleGrantedAuthority("ROLE_$it") }
+        }
     }
 
 }
