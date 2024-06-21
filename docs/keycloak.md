@@ -1,12 +1,17 @@
 # Securing Your APIs with Spring Security and Keycloak
 
-Nowdays when developing a could native application or so-called Saas applications, we would like slipt the application into several components/parts, eg. a  administration UI for adminstrators, a web application or mobile apps for end users, and one or several backend services for handling the certain business in the background, the web application or mobile apps interact with the backend services by lightweight protocols, such as HTTP, WebSocket etc. To secure these components in your application, embracing a mature OAuth2/OpenID Connect product is a smart choose.
+Nowdays when developing a could native application or so-called Saas applications, we would like slipt the application into several components/parts, eg. a  administration UI for adminstrators, a web application or mobile apps for end users, and one or several backend services for handling the certain business in the background, the web application or mobile apps interact with the backend services through lightweight protocols, such as HTTP, WebSocket etc. 
+
+To secure your application and interaction between the components in your application, embracing a mature OAuth2/OpenID Connect product is a smart choose.
 
 * The backend services work as OAuth2 *ResourceServer* role.
 * The Web app or Mobile apps that call the backend APIs work as OAuth2 *Client* roles.
-* The *Authentication Server* role is responsisble for authentication and authorization, you can develop one from scratch using Spring Authencation Server,or use a mature self-host solution, eg. Keycloak, or using cloud identity providers, eg Auth0, Okta, etc. 
+* The *Authentication Server* role is responsisble for authentication and authorization, there are several options:
+   * Develop one from scratch using the existing OAuth2 lib, such Spring Authencation Server, Pac4j etc.
+   * Simply deploy a mature self-host solution, eg. Keycloak
+   * Or using cloud ready identity providers, eg Auth0, Okta, etc. 
 
-Firstly prepare a Keycloak server in the development stage. 
+Here we choose Keycloak server as *Authentication Server*. 
 
 ## Setup Keycloak Server
 
