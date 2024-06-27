@@ -33,16 +33,27 @@ dependencies {
         exclude(module = "mockito-junit-jupiter")
         exclude(module = "android-json")
     }
-    testImplementation("io.mockk:mockk:1.13.11")
-    testImplementation("com.ninja-squad:springmockk:4.0.2")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.9.1")
-    testImplementation("io.kotest:kotest-framework-concurrency:5.9.1")
+    testImplementation("org.springframework.security:spring-security-test")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-    testImplementation("org.springframework.security:spring-security-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    // mockk
+    testImplementation("io.mockk:mockk:1.13.11")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
+
+    // kotest
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.9.1")
+    testImplementation("io.kotest:kotest-framework-concurrency:5.9.1")
+
+
+    // testcontainers
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("com.github.dasniko:testcontainers-keycloak:3.4.0")
 }
 
 kotlin {
