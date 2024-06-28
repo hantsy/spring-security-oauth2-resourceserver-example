@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod.GET
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.config.web.server.invoke
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator
 import org.springframework.security.oauth2.core.OAuth2Error
@@ -48,6 +49,18 @@ class GreetingController {
     }
 }
 
+@RestController
+@RequestMapping("/me")
+class CurrentUserController {
+
+    @GetMapping
+    fun currentUser(@AuthenticationPrincipal principal: Jwt): Any {
+        return mapOf("username" to principal.subject,
+            "roles" to (principal.claims["realm_access"] as Map<String, Any>?)?.get("roles") as Collection<String>?
+        )
+    }
+}
+
 @Configuration
 class SecurityConfig {
     companion object {
@@ -66,7 +79,7 @@ class SecurityConfig {
             // enable OAuth2 resource server support
             oauth2ResourceServer { jwt { } }
             authorizeExchange {
-                authorize(pathMatchers(GET, "/greeting/**"), hasRole("DEMO_USER"))
+                authorize(pathMatchers(GET, "/greeting/**"), hasRole("USER"))
                 authorize(anyExchange, permitAll)
             }
         }
