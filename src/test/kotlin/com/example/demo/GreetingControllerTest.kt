@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.context.annotation.Import
+import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt
 import org.springframework.test.web.reactive.server.WebTestClient
 
@@ -26,7 +27,11 @@ class GreetingControllerTest {
 
     @Test
     fun `greeting with token`() {
-        this.client.mutateWith(mockJwt().jwt { it.subject("test-subject") })
+        this.client
+            .mutateWith(mockJwt()
+                .authorities(AuthorityUtils.createAuthorityList("ROLE_USER"))
+                .jwt { it.subject("test-subject") }
+            )
             .get()
             .uri("/greeting/Hantsy")
             .exchange()

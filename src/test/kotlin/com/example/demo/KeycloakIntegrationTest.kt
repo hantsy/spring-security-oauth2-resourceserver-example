@@ -1,13 +1,12 @@
 package com.example.demo
 
-import com.example.demo.KeycloakUserTest.TestConfig
+import com.example.demo.KeycloakIntegrationTest.TestConfig
 import dasniko.testcontainers.keycloak.KeycloakContainer
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.testcontainers.properties.TestcontainersPropertySourceAutoConfiguration
@@ -20,9 +19,9 @@ import java.time.Duration
 
 @SpringBootTest(classes = [TestConfig::class])
 @Testcontainers
-class KeycloakUserTest {
+class KeycloakIntegrationTest {
     companion object {
-        private val log = LoggerFactory.getLogger(KeycloakUserTest::class.java)
+        private val log = LoggerFactory.getLogger(KeycloakIntegrationTest::class.java)
     }
 
     @TestConfiguration(proxyBeanMethods = false)

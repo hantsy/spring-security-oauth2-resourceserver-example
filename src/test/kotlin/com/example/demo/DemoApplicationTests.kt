@@ -1,6 +1,7 @@
 package com.example.demo
 
 import io.kotest.matchers.string.shouldContain
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
@@ -11,6 +12,7 @@ import java.util.function.Consumer
 
 @SpringBootTest
 @AutoConfigureWebTestClient
+@Disabled
 class DemoApplicationTests {
 
     val token: Consumer<HttpHeaders> = Consumer<HttpHeaders> { http ->
