@@ -45,7 +45,6 @@ class KeycloakIntegrationTest {
             const val POSTGRES_IMAGE: String = "postgres:16"
             const val KEYCLOAK_IMAGE: String = "quay.io/keycloak/keycloak:latest"
             val IMPORT_FILES: Array<String> = arrayOf(
-                //   "/keycloak/master-realm.json", "/keycloak/master-users-0.json",
                 "/keycloak/demo-realm.json", "/keycloak/demo-users-0.json"
             )
             const val REALM_NAME: String = "demo"
