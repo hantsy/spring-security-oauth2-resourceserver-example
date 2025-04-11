@@ -53,7 +53,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
-    testImplementation("com.github.dasniko:testcontainers-keycloak:3.6.0")
+    testImplementation("com.github.dasniko:testcontainers-keycloak:3.7.0")
 }
 
 kotlin {
