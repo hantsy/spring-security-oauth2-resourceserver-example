@@ -41,7 +41,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 
     // mockk
-    testImplementation("io.mockk:mockk:1.13.16")
+    testImplementation("io.mockk:mockk:1.14.2")
     testImplementation("com.ninja-squad:springmockk:4.0.2")
 
     // kotest
